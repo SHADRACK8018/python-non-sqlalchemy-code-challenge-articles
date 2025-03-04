@@ -69,13 +69,34 @@ class Magazine:
         if not isinstance(category, str) or len(category) == 0:
             raise Exception("Category must be a non-empty string.")
         
-        self.name = name
-        self.category = category
+        self._name = name
+        self._category = category
         self._articles = []  # List of articles for this magazine
 
         # Add the magazine to the global 'all' list
         Magazine.all.append(self)
 
+    @property
+    def name(self):
+        return self._name  # Immutable name property
+
+    @name.setter
+    def name(self, new_name):
+        if isinstance(new_name, str) and 2 <= len(new_name) <= 16:
+            self._name = new_name
+        else:
+            raise Exception("Magazine name must be between 2 and 16 characters.")
+
+    @property
+    def category(self):
+        return self._category  # Immutable category property
+
+    @category.setter
+    def category(self, new_category):
+        if isinstance(new_category, str) and len(new_category) > 0:
+            self._category = new_category
+        else:
+            raise Exception("Category must be a non-empty string.")
 
     def articles(self):
         return self._articles  # Return all articles in the magazine
@@ -104,4 +125,3 @@ class Magazine:
         if not Article.all:
             return None
         return max(cls.all, key=lambda magazine: len(magazine._articles))
-
