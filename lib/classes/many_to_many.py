@@ -25,6 +25,9 @@ class Article:
     def title(self):
         return self._title  # Immutable title property
 
+    def __repr__(self):
+        return f"Article(title={self.title}, author={self.author.name}, magazine={self.magazine.name})"
+
 
 class Author:
     def __init__(self, name):
@@ -55,6 +58,9 @@ class Author:
         # Return unique categories of the magazines the author has contributed to
         magazines = self.magazines()
         return list(set(magazine.category for magazine in magazines)) or None
+
+    def __repr__(self):
+        return f"Author(name={self.name})"
 
 
 class Magazine:
@@ -125,3 +131,6 @@ class Magazine:
         if not Article.all:
             return None
         return max(cls.all, key=lambda magazine: len(magazine._articles))
+
+    def __repr__(self):
+        return f"Magazine(name={self.name}, category={self.category})"
